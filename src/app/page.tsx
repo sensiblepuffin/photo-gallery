@@ -1,6 +1,6 @@
 'use client'
 
-import Link from "next/link";
+import { Button } from '@mui/material';
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -24,7 +24,7 @@ export default function Page() {
     return (
       <div>
         <h1>Welcome to the Photo Gallery!</h1>
-        <Link href="/import">Add some photos!</Link>
+        <Button variant="contained" href="/import">Add some photos!</Button>
         <Photos />
       </div>
     );
