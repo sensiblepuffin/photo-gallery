@@ -6,11 +6,6 @@ import { useEffect, useState } from "react";
 import { Photos } from './Photos';
 
 export default function Page() {
-  const [ photos, setPhotos ] = useState([]);
-
-  useEffect(() => {
-    setPhotos(JSON.parse(localStorage.getItem('photos')));
-  }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -32,7 +27,7 @@ export default function Page() {
         </Toolbar>
 
       </AppBar>
-      <Photos photos={photos} />
+      <Photos />
     </Box>
   );
 }

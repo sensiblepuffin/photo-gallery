@@ -1,5 +1,7 @@
 import { Add, Delete } from "@mui/icons-material";
 import { Box, Button, IconButton, ImageList, ImageListItem } from "@mui/material";
+import { useEffect, useState } from "react";
+import { UploadForm } from "./UploadForm";
 
 const Photo = ({ children }) => (
   <ImageListItem sx={{ border: 'solid', borderWidth: '1px' }}>
@@ -7,7 +9,18 @@ const Photo = ({ children }) => (
   </ImageListItem>
 );
 
-export const Photos = ({ photos }) => {
+export const Photos = () => {
+  const [photos, setPhotos] = useState<Array<Blob>|null>([]);
+
+  useEffect(() => {
+    setPhotos(JSON.parse(localStorage.getItem('photos')));
+    window.addEventListener("storage", (event: StorageEvent) => { 
+      if (event.key === 'photos') {
+        console.info('new photos', event.newValue);
+        setPhotos(JSON.parse(localStorage.getItem('photos')));
+      }
+    });
+   }, []);
 
   return (
     <ImageList cols={3} gap={2} variant="masonry">
@@ -19,13 +32,7 @@ export const Photos = ({ photos }) => {
           </IconButton>
         </Photo>
       ))}
-      <Photo key={`photo-add`}>
-        <Box minHeight={300} sx={{ display: 'flex' }}>
-          <Button sx={{ height: '100%', width: '100%' }}>
-            <Add />
-          </Button>
-        </Box>
-      </Photo>
+      <UploadForm />
     </ImageList>
   );
 };
