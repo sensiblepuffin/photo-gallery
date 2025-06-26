@@ -1,7 +1,9 @@
 'use client'
 
-import { Button } from '@mui/material';
+import { AppBar, Box, Button, IconButton, ImageList, ImageListItem, Toolbar, Typography } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import { useEffect, useState } from "react";
+import { Photos } from './Photos';
 
 export default function Page() {
   const [ photos, setPhotos ] = useState([]);
@@ -10,22 +12,27 @@ export default function Page() {
     setPhotos(JSON.parse(localStorage.getItem('photos')));
   }, []);
 
-  const Photos = () => {
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ marginRight: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" sx={{flexGrow: 1}}>
+            Welcome to the Photo Gallery!
+          </Typography>
+        <Button variant="contained" href="/import">Add Photos</Button>
+        </Toolbar>
 
-    return (
-      <div>
-        {photos.map((photo: Blob, idx: Number) => (
-          <img key={`photo-${idx}`} src={photo} />
-        ))}
-      </div>
-    )
-  };
-
-    return (
-      <div>
-        <h1>Welcome to the Photo Gallery!</h1>
-        <Button variant="contained" href="/import">Add some photos!</Button>
-        <Photos />
-      </div>
-    );
+      </AppBar>
+      <Photos photos={photos} />
+    </Box>
+  );
 }

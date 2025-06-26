@@ -7,7 +7,6 @@ export default function Page() {
       <h1>Let's select some photos!</h1>
       <UploadForm />
       <Button variant="contained" href="/">All done?</Button>
-
     </div>
   )
 }
