@@ -1,13 +1,13 @@
+'use client'
+
 import { Add } from "@mui/icons-material";
 import { Box, IconButton } from "@mui/material";
-import styled from '@emotion/styled';
 import { useRef } from "react";
 
 export const UploadForm = () => {
-  const imgRef = useRef<HTMLInputElement | null>(null);
+  const imgRef = useRef(null);
 
   const onChangeFile = (evt) => {
-    console.info('click?');
     let selected = evt.target.files;
     let photos = JSON.parse(localStorage.getItem("photos")) || [];
     let newPhotos = [];
@@ -16,8 +16,13 @@ export const UploadForm = () => {
 
       reader.addEventListener('load', () => {
         newPhotos = newPhotos.concat([reader.result.toString()]);
-        console.info('new', newPhotos);
+        // console.info('UploadForm: new', newPhotos);
         localStorage.setItem("photos", JSON.stringify(photos.concat(newPhotos)));
+        window.dispatchEvent(
+          new StorageEvent('storage', 
+            { key: 'photos', newValue: reader.result.toString() }
+          )
+        );
       }, false);
 
       if (selected.item(i)) {
@@ -26,16 +31,24 @@ export const UploadForm = () => {
     }
   };
 
+  const handleClick = () => {
+    imgRef.current.click();
+  }
+
   return (
-    <IconButton onClick={() => imgRef.current?.click()}>
-      <Add />
-      <input id="photo-upload"
+    <Box sx={{ position: 'fixed', right: '20px', bottom: '20px' }}>
+      <input
         type='file'
         ref={imgRef}
+        multiple
         style={{ display: 'none' }}
         onChange={onChangeFile}
-      // onClick={onChangeFile}
       />
-    </IconButton>
+      <IconButton sx={{ width: '20px', height: '20px' }} onClick={handleClick}>
+        <Add color="primary" sx={{ fontSize: '48px', border: 'solid', borderRadius: '5px', borderWidth: '2px' }} />
+      </IconButton>
+    </Box>
   )
 }
+
+export default UploadForm;

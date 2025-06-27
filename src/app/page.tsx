@@ -23,9 +23,7 @@ export default function Page() {
           <Typography variant="h6" sx={{flexGrow: 1}}>
             Welcome to the Photo Gallery!
           </Typography>
-        <Button variant="contained" href="/import">Add Photos</Button>
         </Toolbar>
-
       </AppBar>
       <Photos />
     </Box>

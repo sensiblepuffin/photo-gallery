@@ -1,3 +1,5 @@
+'use client'
+
 import { Add, Delete } from "@mui/icons-material";
 import { Box, Button, IconButton, ImageList, ImageListItem } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -13,10 +15,13 @@ export const Photos = () => {
   const [photos, setPhotos] = useState<Array<Blob>|null>([]);
 
   useEffect(() => {
-    setPhotos(JSON.parse(localStorage.getItem('photos')));
+    setPhotos(JSON.parse(localStorage.getItem('photos')) || []);
     window.addEventListener("storage", (event: StorageEvent) => { 
       if (event.key === 'photos') {
-        console.info('new photos', event.newValue);
+        const n: Blob = new Blob([event.newValue]);
+        console.info('Photos: new', n);
+        console.info('Photos: rest', photos);
+        // localStorage.setItem(event.key, JSON.stringify(photos.concat(n)));
         setPhotos(JSON.parse(localStorage.getItem('photos')));
       }
     });
