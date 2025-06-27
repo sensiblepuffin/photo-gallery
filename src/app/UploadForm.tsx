@@ -36,7 +36,7 @@ export const UploadForm = () => {
   }
 
   return (
-    <Box sx={{ position: 'fixed', right: '20px', bottom: '20px' }}>
+    <Box sx={{ position: 'fixed', right: '40px', bottom: '40px' }}>
       <input
         type='file'
         ref={imgRef}

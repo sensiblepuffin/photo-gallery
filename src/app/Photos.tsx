@@ -19,20 +19,32 @@ export const Photos = () => {
     window.addEventListener("storage", (event: StorageEvent) => { 
       if (event.key === 'photos') {
         const n: Blob = new Blob([event.newValue]);
-        console.info('Photos: new', n);
-        console.info('Photos: rest', photos);
-        // localStorage.setItem(event.key, JSON.stringify(photos.concat(n)));
+        // console.info('Photos: new', n);
+        // console.info('Photos: rest', photos);
         setPhotos(JSON.parse(localStorage.getItem('photos')));
       }
     });
    }, []);
 
+  const handleDelete = (index: number) => {
+    console.info('index to remove', index);
+    let prev = photos;
+    prev.splice(index, 1);
+    console.info('new', prev.length);
+    setPhotos([ ...prev ]);
+  };
+
+  useEffect(() => {
+    console.info('updating storage', photos.length);
+    localStorage.setItem('photos', JSON.stringify(photos));
+  }, [photos])
+
   return (
     <ImageList cols={3} gap={2} variant="masonry">
-      {photos.map((photo: Blob, idx: Number) => (
+      {photos.map((photo: Blob, idx: number) => (
         <Photo key={`photo-${idx}`}>
           <img src={photo} />
-          <IconButton sx={{ position: 'absolute', right: 0, top: 0 }}>
+          <IconButton onClick={() => handleDelete(idx)} sx={{ position: 'absolute', right: 0, top: 0 }}>
             <Delete />
           </IconButton>
         </Photo>

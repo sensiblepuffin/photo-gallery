@@ -21,7 +21,7 @@ export default function Page() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" sx={{flexGrow: 1}}>
-            Welcome to the Photo Gallery!
+            Photo Gallery
           </Typography>
         </Toolbar>
       </AppBar>
